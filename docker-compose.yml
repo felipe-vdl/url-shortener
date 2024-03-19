@@ -1,0 +1,33 @@
+version: "3.8"
+services:
+  frontend:
+    restart: always
+    build:
+      context: ./frontend
+    ports:
+      - "80:80"
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+
+  backend:
+    restart: always
+    build:
+      context: ./backend
+    depends_on:
+      - mysql
+    ports:
+      - "3001:3000"
+
+  mysql:
+    image: mysql:8
+    restart: always
+    volumes:
+      - "url_shortener_db:/var/lib/mysql"
+    environment:
+      - MYSQL_ROOT_PASSWORD=secret
+      - MYSQL_DATABASE=url_shortener
+    ports:
+      - "3306:3306"
+
+volumes:
+  url_shortener_db:

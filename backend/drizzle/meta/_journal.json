@@ -1,0 +1,13 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1710787300173,
+      "tag": "0000_pink_justin_hammer",
+      "breakpoints": true
+    }
+  ]
+}
