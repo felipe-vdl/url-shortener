@@ -1,22 +1,29 @@
 version: "3.8"
 services:
-  frontend:
-    restart: always
-    build:
-      context: ./frontend
-    ports:
-      - "80:80"
-    extra_hosts:
-      - "host.docker.internal:172.17.0.1"
+  # frontend:
+  #   restart: always
+  #   build:
+  #     context: ./frontend
+  #   ports:
+  #     - "80:80"
+  #   extra_hosts:
+  #     - "host.docker.internal:172.17.0.1"
 
-  backend:
+  # backend:
+  #   restart: always
+  #   build:
+  #     context: ./backend
+  #   depends_on:
+  #     - mysql
+  #   ports:
+  #     - "3001:3000"
+  server:
     restart: always
-    build:
-      context: ./backend
+    build: ./
     depends_on:
       - mysql
     ports:
-      - "3001:3000"
+      - "3000:3000"
 
   mysql:
     image: mysql:8

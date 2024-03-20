@@ -7,6 +7,8 @@ import mysql from "mysql2/promise";
 
 import { shortenedUrls } from "./schema.js";
 import { generateBase62Id } from "./utils.js";
+import fastifyStatic from "@fastify/static";
+import path from "path";
 
 type URLShortenerGETParams = {
   id: string | undefined;
@@ -21,6 +23,9 @@ const fastify = Fastify({
 await fastify.register(cors, {
   origin: "*",
 });
+await fastify.register(fastifyStatic, {
+  root: path.join(import.meta.dirname, "static"),
+});
 
 const main = async () => {
   const connection = await mysql.createConnection({
@@ -33,10 +38,8 @@ const main = async () => {
 
   const db = drizzle(connection);
 
-  fastify.get("/", async (req, res) => {
-    return res.status(200).send({
-      message: "Hello World!",
-    });
+  fastify.get("/u", async (req, res) => {
+    return res.sendFile("index.html");
   });
 
   fastify.get(
