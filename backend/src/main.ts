@@ -25,16 +25,19 @@ await fastify.register(cors, {
 });
 await fastify.register(fastifyStatic, {
   root: path.join(import.meta.dirname, "static"),
-  prefix: "/u/static/"
+  prefix: "/u/static/",
 });
 
 const main = async () => {
-  const connection = await mysql.createConnection({
+  const connection = await mysql.createPool({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_NAME,
     port: +process.env.DB_PORT,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
   });
 
   const db = drizzle(connection);
